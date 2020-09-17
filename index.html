@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stop_Watch</title>
+
+<style>
+.container {
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
+  padding: 100px;
+}
+button
+{
+  margin: 52px;
+  width: 200px;
+  height: 70px;
+  font-size: xx-large;
+}
+footer
+{
+  font-size: xx-large;
+}
+
+</style>
+</head>
+<body onload="HIDE()">
+   
+  <div class="container">
+    <div>
+    <button id="start" onclick="start()">START</button>
+    </div>
+    <div class="quiz">
+    <h1 id="question"></h1>
+
+    <button class="option" id="option1" onclick="submit(this.id);"></button>
+    <button class="option" id="option2" onclick="submit(this.id);"></button>
+    <button class="option" id="option3" onclick="submit(this.id);"></button>
+    <button class="option" id="option4" onclick="submit(this.id);"></button>
+    <h1 id="timer">00 sec;
+    </h1>
+    <footer id="result"></footer>
+</div>
+      
+    <script>
+    
+    var sec=0;
+
+    function HIDE()
+    {
+     // document.getElementsByClassName('option').style.display="none";
+        document.getElementById('option1').style.display="none";
+        document.getElementById('option2').style.display="none";
+        document.getElementById('option3').style.display="none";
+        document.getElementById('option4').style.display="none";
+        document.getElementById('question').style.display="none";
+        document.getElementById('timer').style.display='none';
+    }
+
+    var question=["what is the capital of Australia?","Lotus Temple is in which city?"];
+
+    var option=["sydney","melbourne","canberra","perth","delhi","kolkata","japipur","hyderabad"];
+    var answer=["canberra","delhi"];
+     var q_no=-1;     
+     
+     function start()
+     {       
+      document.getElementById('timer').style.display='inline';
+        document.getElementById('option1').style.display="inline";
+        document.getElementById('option2').style.display="inline";
+        document.getElementById('option3').style.display="inline";
+        document.getElementById('option4').style.display="inline";
+           q_no=0;
+           sec=0;
+               //display_question();
+       interval= window.setInterval(display_question,1000); 
+
+     }
+     
+     var right=0,wrong=0,limit=2;
+      function display_question()
+      {
+         if(q_no==limit)
+         {
+           document.getElementById('start').innerHTML="correct:"+right+" "+"wrong: "+wrong;
+           window.clearInterval(interval);
+           HIDE();
+           return;
+         }
+
+         document.getElementById('timer').innerHTML=sec; 
+        document.getElementById('question').innerHTML=question[q_no];
+       
+        document.getElementById('option1').innerHTML=option[q_no*4+0];
+        document.getElementById('option2').innerHTML=option[q_no*4+1];
+        document.getElementById('option3').innerHTML=option[q_no*4+2];
+        document.getElementById('option4').innerHTML=option[q_no*4+3];
+
+        sec++;
+        if(sec==10)
+        {
+          document.getElementById('option1').style.color='black';
+        document.getElementById('option2').style.color='black';
+        document.getElementById('option3').style.color='black';
+        document.getElementById('option4').style.color='black';
+        document.getElementById('result').style.display='none';
+         q_no++;
+         sec=0;
+        }
+      }
+
+  
+     function submit(ID)
+     {
+          let chosen= document.getElementById(ID).innerHTML;
+          document.getElementById('result').style.display='inline';
+          if(chosen==answer[q_no])
+     {
+       right++;
+              document.getElementById(ID).style.color='green';
+            document.getElementById('result').innerHTML='Correct';
+            document.getElementById('result').style.color='green';
+
+     }
+            else
+            {
+              wrong++;
+              document.getElementById(ID).style.color='red';
+              document.getElementById('result').innerHTML='Wrong';
+            document.getElementById('result').style.color='red';
+            }
+
+     }
+
+
+    </script>
+
+
+
+</body>
+</html>
